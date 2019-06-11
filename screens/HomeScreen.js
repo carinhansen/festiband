@@ -6,18 +6,23 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  ImageBackground,
   View,
+  Button,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import jsonData from '../festivals';
 let festivalData = jsonData.Festivals;
 import { MonoText } from '../components/StyledText';
+import FestivalDetailScreen from "./FestivalDetailScreen";
 
 export default class HomeScreen extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      results: festivalData
+      results: festivalData,
+      viewOne: true,
+      itemId: null,
     }
   }
 
@@ -25,102 +30,107 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
+  changeView(){
+    this.setState({
+      viewOne: false
+    })
+  }
+
   render() {
+    if(!this.state.viewOne) return <FestivalDetailScreen changeView={ () => this.changeView() } id={this.state.itemId}/>
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View>
-            <Text style={styles.title}>Festiband</Text>
-          </View>
+
+
+        <View style={styles.logoContainer}>
+          <Text style={styles.title}>Festiband</Text>
+        </View>
+
+        <View style={styles.scrollContainer} >
           <Text style={styles.subtitle}>Upcoming festivals</Text>
-          { this.state.results.slice(0, 3).map((item) => (
-            <View  style={styles.upcomingEventContainer}>
-              <Text>{item.name}</Text>
-              <Text>{item.description}</Text>
-            </View>
-          ))}
+          <ScrollView
+            horizontal="yes"
+            style={styles.scrollSection}
+          >
+            { this.state.results.slice(0, 10).map((item) => (
+              <TouchableOpacity
+                style={[styles.upcomingEventContainer, {backgroundColor: 'rgb(255, 204, 204)'}]}
+                onPress={() => {
+                  this.changeView()
+                  this.setState({itemId: item.id})
+                }}
+              >
+                <ImageBackground source={{uri:item.image}} style={[styles.upcomingEventSection, {width: '100%', height: '100%'}]}>
+                  <Text style={styles.upcomingEventTitle}>{item.name}</Text>
+                  <Text style={styles.upcomingEventText}>{item.date}</Text>
+                </ImageBackground>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          <Text style={styles.listOverview}>Click here to see a full list of festivals -></Text>
+        </View>
 
-          {/*<View style={styles.welcomeContainer}>*/}
-            {/*<Image*/}
-              {/*source={*/}
-                {/*__DEV__*/}
-                  {/*? require('../assets/images/robot-dev.png')*/}
-                  {/*: require('../assets/images/robot-prod.png')*/}
-              {/*}*/}
-              {/*style={styles.welcomeImage}*/}
-            {/*/>*/}
-          {/*</View>*/}
 
-          {/*<View style={styles.getStartedContainer}>*/}
-            {/*/!*{this._maybeRenderDevelopmentModeWarning()}*!/*/}
-
-            {/*<Text style={styles.getStartedText}>Get started by opening</Text>*/}
-
-            {/*<View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>*/}
-              {/*<MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>*/}
-            {/*</View>*/}
-
-            {/*<Text style={styles.getStartedText}>*/}
-              {/*Change this text and your app will automatically reload.*/}
-            {/*</Text>*/}
-          {/*</View>*/}
-
-          {/*<View style={styles.helpContainer}>*/}
-            {/*<TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>*/}
-              {/*<Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>*/}
-            {/*</TouchableOpacity>*/}
-          {/*</View>*/}
-        </ScrollView>
-
-        {/*<View style={styles.tabBarInfoContainer}>*/}
-          {/*<Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>*/}
-
-          {/*<View style={[styles.codeHighlightContainer, styles.navigationFilename]}>*/}
-            {/*<MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>*/}
-          {/*</View>*/}
+        {/*<View>*/}
+            {/*{ this.state.results.slice(0, 4).map((item) => (*/}
+              {/*<View*/}
+                {/*style={styles.upcomingEventContainer}*/}
+              {/*>*/}
+                {/*<Text>{item.name}</Text>*/}
+                {/*<Text>{item.shortDescription}</Text>*/}
+              {/*</View>*/}
+            {/*))}*/}
         {/*</View>*/}
       </View>
     );
   }
 
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
+  // _maybeRenderDevelopmentModeWarning() {
+  //   if (__DEV__) {
+  //     const learnMoreButton = (
+  //       <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
+  //         Learn more
+  //       </Text>
+  //     );
+  //
+  //     return (
+  //       <Text style={styles.developmentModeText}>
+  //         Development mode is enabled, your app will be slower but you can use useful development
+  //         tools. {learnMoreButton}
+  //       </Text>
+  //     );
+  //   } else {
+  //     return (
+  //       <Text style={styles.developmentModeText}>
+  //         You are not in development mode, your app will run at full speed.
+  //       </Text>
+  //     );
+  //   }
+  // }
 
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
-  }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
+  // _handleLearnMorePress = () => {
+  //   WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
+  // };
+  //
+  // _handleHelpPress = () => {
+  //   WebBrowser.openBrowserAsync(
+  //     'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
+  //   );
+  // };
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    marginTop: 10,
+  },
+  scrollContainer: {
+    height: 250,
+    paddingLeft: 10,
+  },
+  scrollSection: {
+    paddingBottom: 10,
   },
   developmentModeText: {
     marginBottom: 20,
@@ -129,14 +139,10 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center',
   },
-  contentContainer: {
-    padding: 10,
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
+  logoContainer: {
+    marginTop: 30,
     marginBottom: 20,
+    paddingLeft: 10,
   },
   welcomeImage: {
     width: 100,
@@ -212,9 +218,35 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20
   },
   upcomingEventContainer: {
-    height: 70,
+    borderRadius: 5,
+    marginRight: 10,
+    marginTop: 10,
+    width: 180,
+  },
+  upcomingEventSection: {
+    padding: 10,
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  upcomingEventTitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  upcomingEventText: {
+    color: '#fff',
+    fontSize: 18,
+    textTransform: 'uppercase',
+  },
+  listOverview: {
+    fontSize: 14,
+    color: 'lightgrey',
+  },
+  image: {
+    height: 50,
+    width: 50,
   }
 });
