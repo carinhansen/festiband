@@ -1,43 +1,76 @@
 {
   "Festivals": [
     {
+      "id": "1",
+      "name": "Defqon 1",
+      "shortDescription": "lorem ipsum dolor sit amet",
+      "date": "14 - 16 Maart",
+      "year": "2019",
+      "description": "Tot nu toe is ieder jaar uitverkocht geraakt. Door het grote succes van de camping zijn er de afgelopen twee jaar meer weekendkaarten uitgegeven dan dagkaarten (alleen voor de zaterdag). Er is op dit festival een verscheidenheid aan muziekstijlen, alle in de categorie 'hardere dance'. Onder andere hardstyle, hardcore, jump klinken door de boxen.",
+      "image": "http://www.rskungfuacademy.com/wp-content/uploads/2018/06/134923-0061_delio_6985-bewerkt.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Decibel",
+      "date": "14 - 16 Maart",
+      "year": "2019",
+      "shortDescription": "lorem ipsum dolor sit amet",
+      "description": "Er is op dit festival een verscheidenheid aan muziekstijlen, alle in de categorie 'hard dance'. Onder andere hardstyle, hardcore, freestyle, uptempo, millennium, oldschool & early rave, terror en industrial beats klinken door de boxen.",
+      "image": "https://www.hardsummer.nl/wp-content/uploads/2015/03/Decibeloutdoor2018-34-1.jpg"
+    },
+    {
+      "id": "3",
       "name": "Tomorrowland",
+      "date": "14 - 16 Maart",
+      "year": "2019",
+      "shortDescription": "lorem ipsum dolor sit amet",
       "description": "lorem ipsum dolor sit amet",
       "image": "https://www.tomorrowland.com/src/Frontend/Themes/tomorrowland/Core/Layout/images/timeline/2017-1.jpg"
     },
     {
+      "id": "4",
       "name": "Decibel",
-      "description": "lorem ipsum dolor sit amet"
+      "date": "14 - 16 Maart",
+      "year": "2019",
+      "shortDescription": "lorem ipsum dolor sit amet",
+      "description": "Er is op dit festival een verscheidenheid aan muziekstijlen, alle in de categorie 'hard dance'. Onder andere hardstyle, hardcore, freestyle, uptempo, millennium, oldschool & early rave, terror en industrial beats klinken door de boxen.",
+      "image": "https://www.hardsummer.nl/wp-content/uploads/2015/03/Decibeloutdoor2018-34-1.jpg"
     },
     {
+      "id": "5",
       "name": "Tomorrowland",
+      "date": "14 - 16 Maart",
+      "year": "2019",
+      "shortDescription": "lorem ipsum dolor sit amet",
       "description": "lorem ipsum dolor sit amet",
-      "image": ""
+      "image": "https://www.tomorrowland.com/src/Frontend/Themes/tomorrowland/Core/Layout/images/timeline/2017-1.jpg"
     },
     {
-      "name": "Tomorrowland",
+      "id": "6",
+      "name": "Defqon 1",
+      "date": "14 - 16 Maart",
+      "year": "2019",
+      "shortDescription": "lorem ipsum dolor sit amet",
       "description": "lorem ipsum dolor sit amet",
-      "image": ""
+      "image": "http://www.rskungfuacademy.com/wp-content/uploads/2018/06/134923-0061_delio_6985-bewerkt.jpg"
     },
     {
-      "name": "Tomorrowland",
-      "description": "lorem ipsum dolor sit amet",
-      "image": ""
+      "id": "7",
+      "name": "Decibel",
+      "date": "14 - 16 Maart",
+      "year": "2019",
+      "shortDescription": "lorem ipsum dolor sit amet",
+      "description": "Er is op dit festival een verscheidenheid aan muziekstijlen, alle in de categorie 'hard dance'. Onder andere hardstyle, hardcore, freestyle, uptempo, millennium, oldschool & early rave, terror en industrial beats klinken door de boxen.",
+      "image": "https://www.hardsummer.nl/wp-content/uploads/2015/03/Decibeloutdoor2018-34-1.jpg"
     },
     {
+      "id": "8",
       "name": "Tomorrowland",
+      "date": "14 - 16 Maart",
+      "year": "2019",
+      "shortDescription": "lorem ipsum dolor sit amet",
       "description": "lorem ipsum dolor sit amet",
-      "image": ""
-    },
-    {
-      "name": "Tomorrowland",
-      "description": "lorem ipsum dolor sit amet",
-      "image": ""
-    },
-    {
-      "name": "Tomorrowland",
-      "description": "lorem ipsum dolor sit amet",
-      "image": ""
+      "image": "https://www.tomorrowland.com/src/Frontend/Themes/tomorrowland/Core/Layout/images/timeline/2017-1.jpg"
     }
   ]
 }
