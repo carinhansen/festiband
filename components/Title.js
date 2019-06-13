@@ -3,7 +3,7 @@ import {StyleSheet, Text} from 'react-native';
 
 export class Title extends React.Component {
   render() {
-    return <Text {...this.props} style={styles.title} />;
+    return <Text {...this.props} style={[styles.title, this.props.style]} />;
   }
 }
 
