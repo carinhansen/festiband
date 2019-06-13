@@ -1,15 +1,31 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, View, ImageBackground, Button} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, ImageBackground, Button, Image} from 'react-native';
 import jsonData from '../festivals';
 let jsonFestivalData = jsonData.Festivals;
-import { ExpoLinksView } from '@expo/samples';
+import HeaderTitle from "../components/HeaderTitle";
+import Header from "../components/Header/Header";
+import ContentContainer from "../components/ContentContainer";
+import Title from "../components/Title";
 
 export default class TimetableDetailScreen extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       results: jsonFestivalData,
+      detailFest: {},
     };
+  }
+
+  componentDidMount(){
+    this.getFestivalData();
+  }
+
+  getFestivalData()  {
+    const test = this.state.results.filter(obj => {
+      return obj.id == this.props.id;
+    })
+
+    this.setState({detailFest: test[0]});
   }
 
   static navigationOptions = {
@@ -20,10 +36,12 @@ export default class TimetableDetailScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.detailTitle}>Timetable</Text>
-          <Text style={styles.detailTitle}>{this.festiName}!</Text>
-        </View>
+        <Header source={{uri: this.state.detailFest.image}}/>
+
+        <ContentContainer>
+          <Title>Timetable</Title>
+          <Title>{this.state.detailFest.name}!</Title>
+        </ContentContainer>
       </ScrollView>
     );
   }
@@ -33,47 +51,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  contentContainer: {
-    marginBottom: 20,
-    padding: 20,
-  },
-  header: {
-    height: 150,
-    backgroundColor: "red",
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  detailTitle: {
-    fontSize: 40,
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  linkToDetailInfo: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'black',
-    textAlign: 'left',
-  },
-  subTitle: {
-    fontSize: 16,
-    color: 'lightgrey',
-  },
-  introSection: {
-    marginBottom: 20,
-  },
-  informationSection: {
-    marginBottom: 10,
-    textAlign: 'left',
   },
 });

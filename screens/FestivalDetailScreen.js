@@ -1,15 +1,17 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, View, ImageBackground, Button} from 'react-native';
+import {ScrollView, StyleSheet, Text, View, ImageBackground, Button, TouchableOpacity} from 'react-native';
 import jsonData from '../festivals';
 let jsonFestivalData = jsonData.Festivals;
-import { ExpoLinksView } from '@expo/samples';
 import TimetableDetailScreen from "./TimetableDetailScreen";
 import FloorplanDetailScreen from "./FloorplanDetailScreen";
-let festiName;
-let festiDescription;
-let festiImage;
-
-
+import Title from "../components/Title.js";
+import InformationSectionLinkTitle from "../components/InformationSection/InformationSectionLinkTitle";
+import SectionTitle from "../components/SectionTitle";
+import InformationSectionImage from "../components/InformationSection/InformationSectionImage";
+import InformationSectionLinkSubTitle from "../components/InformationSection/InformationSectionLinkSubTitle";
+import Header from "../components/Header/Header";
+import ContentContainer from "../components/ContentContainer";
+import HomeScreen from "./HomeScreen";
 
 export default class FestivalDetailScreen extends React.Component {
   constructor(props){
@@ -17,89 +19,97 @@ export default class FestivalDetailScreen extends React.Component {
     this.state = {
       results: jsonFestivalData,
       view: null,
+      detailFest: {},
     };
+  }
 
+  componentDidMount(){
     this.getFestivalData();
+  }
+
+  getFestivalData()  {
+    const test = this.state.results.filter(obj => {
+      return obj.id == this.props.id;
+    })
+
+    this.setState({detailFest: test[0]});
   }
 
   static navigationOptions = {
     title: 'FestivalDetail',
   };
 
-  timetableView(){
+  changeView(view){
     this.setState({
-      view: 'timetable',
+      view: view
     })
-  }
-
-  floorplanView(){
-    this.setState({
-      view: 'floorplan',
-    })
-  }
-
-  getFestivalData()  {
-    const getName = Object.values(jsonFestivalData.find(festival => festival.id === this.props.id).name);
-    this.festiName = getName.toString().replace(/,/g,'');
-
-    const getDescription = Object.values(jsonFestivalData.find(festival => festival.id === this.props.id).description);
-    this.festiDescription = getDescription.toString().replace(/,/g,'');
-
-    this.festiImage = Object.values(jsonFestivalData.find(festival => festival.id === this.props.id).image).toString().replace(/,/g,'');
-    console.log(this.festiImage)
   }
 
   render() {
     if(this.state.view === 'timetable') {
-      return <TimetableDetailScreen/>
+      return <TimetableDetailScreen id={this.props.id}/>
     } else if(this.state.view === 'floorplan'){
-      return <FloorplanDetailScreen/>
+      return <FloorplanDetailScreen id={this.props.id}/>
+    } else if(this.state.view === 'home'){
+      return <HomeScreen/>
     }
+
     return (
       <ScrollView style={styles.container}>
+        <Header source={{uri: this.state.detailFest.image}} color={this.state.detailFest.color}/>
 
-        <ImageBackground source={{uri: this.festiImage}} style={[styles.header]}>
-          <Text style={styles.headerTitle}>{this.festiName}!</Text>
-        </ImageBackground>
+        <ContentContainer>
+          <TouchableOpacity onPress={() => this.changeView('home')} style={{flexDirection: 'row', justifyContent:'space-between', opacity:0.5, marginBottom:10}}>
+            <ImageBackground source={require('../assets/images/arrowBack-01.png')} style={{width: 9, height: 16, marginRight: 5}}/>
+            <Text style={{textAlign:'left',flex: 1, color: '#000'}}>Go back</Text>
+          </TouchableOpacity>
 
-        <View style={styles.contentContainer}>
           <View style={styles.introSection}>
-            <Text style={styles.title}>{this.festiName}</Text>
-            <Text>{this.festiDescription}!</Text>
+            <Title>{this.state.detailFest.name}</Title>
+            <Text>{this.state.detailFest.description}!</Text>
           </View>
 
           <View>
-            <Text style={styles.sectionTitle}>Information</Text>
+            <SectionTitle>Information</SectionTitle>
 
             <View style={styles.informationSection}>
-              <ImageBackground source={require('../assets/images/food.png')} style={{width: 50, height: 50}}/>
+              <InformationSectionImage source={require('../assets/images/timetable-01.png')}/>
               <View style={{width: '80%', justifyContent: 'center'}}>
-                <Text
+                <InformationSectionLinkTitle
                   onPress={() => {
-                  this.timetableView()
+                  this.changeView('timetable')
                   this.setState({itemId: this.props.id})
                   }}
-                  style={styles.linkToDetailInfo}
-                >Timetable</Text>
-                <Text style={styles.subtitle}>See who is playing</Text>
+                >Timetable</InformationSectionLinkTitle>
+                <InformationSectionLinkSubTitle>See who is playing</InformationSectionLinkSubTitle>
               </View>
             </View>
 
             <View style={styles.informationSection}>
-              <ImageBackground source={require('../assets/images/food.png')} style={{width: 50, height: 50}}/>
+              <InformationSectionImage source={require('../assets/images/floorplan-01.png')}/>
               <View style={{width: '80%', justifyContent: 'center'}}>
-                <Text
+                <InformationSectionLinkTitle
                   onPress={() => {
-                    this.floorplanView()
-                    this.setState({itemId: this.props.id})
+                    this.changeView('floorplan')
                   }}
-                  style={styles.linkToDetailInfo}
-                >Floorplan</Text>
-                <Text style={styles.subtitle}>Floorplan with stand information</Text>
+                >Floorplan</InformationSectionLinkTitle>
+                <InformationSectionLinkSubTitle>Floorplan with stand information</InformationSectionLinkSubTitle>
+              </View>
+            </View>
+
+            <View style={styles.informationSection}>
+              <InformationSectionImage source={require('../assets/images/food.png')}/>
+              <View style={{width: '80%', justifyContent: 'center'}}>
+                <InformationSectionLinkTitle
+                  onPress={() => {
+                    this.changeView('stands')
+                  }}
+                >Stands</InformationSectionLinkTitle>
+                <InformationSectionLinkSubTitle>See which stands are available</InformationSectionLinkSubTitle>
               </View>
             </View>
           </View>
-        </View>
+        </ContentContainer>
       </ScrollView>
     );
   }
@@ -109,43 +119,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  contentContainer: {
-    marginBottom: 20,
-    padding: 20,
-  },
-  header: {
-    height: 200,
-    backgroundColor: 'lightgrey',
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'flex-end',
-    paddingBottom: 10,
-  },
-  headerTitle: {
-    fontSize: 30,
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  sectionTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  linkToDetailInfo: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'black',
-    textAlign: 'left',
-  },
-  subTitle: {
-    fontSize: 16,
-    color: 'lightgrey',
   },
   introSection: {
     marginBottom: 20,
@@ -157,4 +130,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  headerContainer: {
+    backgroundColor: '#ff0066',
+    marginBottom: 20,
+  },
+  header: {
+    height: 200,
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingBottom: 10,
+  }
 });
