@@ -1,5 +1,15 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, View, ImageBackground, Button, Image, Dimensions} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  Button,
+  Image,
+  Dimensions,
+  TouchableOpacity
+} from 'react-native';
 import jsonData from '../festivals';
 let jsonFestivalData = jsonData.Festivals;
 import InformationSectionLinkTitle from "../components/InformationSection/InformationSectionLinkTitle";
@@ -52,6 +62,12 @@ export default class FloorplanDetailScreen extends React.Component {
         <Header source={{uri: this.state.detailFest.image}} color={this.state.detailFest.color} />
 
         <ContentContainer>
+          // TODO: make back button component
+          <TouchableOpacity onPress={() => this.changeView('festivalDetail')} style={{flexDirection: 'row', justifyContent:'space-between', opacity:0.5, marginBottom:10}}>
+            <ImageBackground source={require('../assets/images/arrowBack-01.png')} style={{width: 9, height: 16, marginRight: 5}}/>
+            <Text style={{textAlign:'left',flex: 1, color: '#000'}}>Go back</Text>
+          </TouchableOpacity>
+
           <View style={styles.floorplanContainer}>
             <Title>Floorplan</Title>
               <Image source={require('../assets/images/TML_floorplan.jpg')} style={[styles.floorplanImage]} resizeMode="cover"/>
