@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'left',
     marginLeft: 10,
+    fontFamily: 'cocogoose',
   },
 });
 

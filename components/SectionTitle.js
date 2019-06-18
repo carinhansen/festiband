@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 10,
+    fontFamily: 'cocogoose',
   },
 });
 
